@@ -1,21 +1,26 @@
-import React from "react"
-import { Link } from "gatsby"
+import React from 'react';
+import MessageForm from '../components/MessageForm';
+import {connect} from 'react-redux';
 
-import Layout from "../components/layout"
-import Image from "../components/image"
-import SEO from "../components/seo"
+function index(props) {
+  return (
+    <div>
+      <MessageForm />
+   <ul>
+     {
+       props.message.map(key=>{
+         return <li>{key.message}</li>
+       })
+     }
+   </ul>
+   </div>
+  )
+}
 
-const IndexPage = () => (
-  <Layout>
-    <SEO title="Home" />
-    <h1>Hi people</h1>
-    <p>Welcome to your new Gatsby site.</p>
-    <p>Now go build something great.</p>
-    <div style={{ maxWidth: `300px`, marginBottom: `1.45rem` }}>
-      <Image />
-    </div>
-    <Link to="/page-2/">Go to page 2</Link>
-  </Layout>
-)
+const mapStateToProps = (state) => {
+  return {
+    message: state.messageReducer.message
+  }
+}
 
-export default IndexPage
+export default connect(mapStateToProps)(index);
